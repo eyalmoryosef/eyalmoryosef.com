@@ -455,11 +455,13 @@ function init() {
     showStatus($("now-save-status"), res.ok ? "נשמר" : "שגיאה", res.ok);
   });
 
-  $("login-form")?.addEventListener("submit", async (e) => {
+  const loginForm = $("login-form");
+  loginForm?.addEventListener("submit", async (e) => {
     e.preventDefault();
     const fd = new FormData(e.target as HTMLFormElement);
     const res = await fetch("/api/admin/login", {
       method: "POST",
+      credentials: "same-origin",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username: fd.get("username"), password: fd.get("password") }),
     });
@@ -469,7 +471,7 @@ function init() {
       if (el) { el.textContent = err.error ?? "שגיאה"; el.removeAttribute("hidden"); }
       return;
     }
-    location.reload();
+    window.location.replace("/admin");
   });
 
   switchTab("blog");
