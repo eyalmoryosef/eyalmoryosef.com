@@ -1,0 +1,32 @@
+---
+import type { Locale } from "@/lib/types";
+import BaseLayout from "./BaseLayout.astro";
+import Navbar from "@components/nav/Navbar.astro";
+import Footer from "@components/footer/Footer.astro";
+import Container from "@components/ui/Container.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  locale: Locale;
+  ogImage?: string;
+  ogType?: "website" | "article";
+  canonicalUrl?: string;
+  jsonLd?: object;
+  noIndex?: boolean;
+  publishedDate?: string;
+  narrow?: boolean;
+}
+
+const { locale, narrow = false, ...rest } = Astro.props;
+---
+
+<BaseLayout locale={locale} {...rest}>
+  <Navbar locale={locale} currentPath={Astro.url.pathname} />
+  <main id="main-content" class="min-h-screen py-12 sm:py-16">
+    <Container narrow={narrow}>
+      <slot />
+    </Container>
+  </main>
+  <Footer locale={locale} />
+</BaseLayout>

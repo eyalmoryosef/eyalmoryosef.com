@@ -1,0 +1,36 @@
+---
+import PageLayout from "@layouts/PageLayout.astro";
+import Hero from "@components/home/Hero.astro";
+import FeaturedProjects from "@components/home/FeaturedProjects.astro";
+import LatestPosts from "@components/home/LatestPosts.astro";
+import NowStrip from "@components/home/NowStrip.astro";
+import { getCollection } from "astro:content";
+import { parseContentId } from "@/lib/utils";
+import { websiteJsonLd, personJsonLd } from "@/lib/seo";
+
+const locale = "he";
+
+const allProjects = await getCollection("projects", (entry) => {
+  const { locale: l } = parseContentId(entry.id);
+  return l === locale;
+});
+const featuredProjects = allProjects.sort((a, b) => a.data.order - b.data.order).slice(0, 3);
+
+const allPosts = await getCollection("blog", (entry) => {
+  const { locale: l } = parseContentId(entry.id);
+  return l === locale && !entry.data.draft;
+});
+const latestPosts = allPosts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime()).slice(0, 3);
+---
+
+<PageLayout
+  title="בית"
+  description="אייל מוריוסף — בונה, סוחר, כותב. בונה מערכות AI, אלגוריתמי מסחר, וכותב על מה שאני לומד."
+  locale={locale}
+  jsonLd={websiteJsonLd()}
+>
+  <Hero locale={locale} />
+  <NowStrip locale={locale} text="מסחר אלגוריתמי, SmartPhysio, רכיבת אופני ידיים" />
+  <FeaturedProjects locale={locale} projects={featuredProjects} />
+  {latestPosts.length > 0 && <LatestPosts locale={locale} posts={latestPosts} />}
+</PageLayout>

@@ -1,0 +1,22 @@
+---
+import type { ProjectStatus, Locale } from "@/lib/types";
+import { t } from "@/i18n/utils";
+
+interface Props {
+  status: ProjectStatus;
+  locale: Locale;
+}
+
+const { status, locale } = Astro.props;
+
+const statusColors: Record<ProjectStatus, string> = {
+  active: "bg-green-100 text-green-800",
+  "in-progress": "bg-amber-100 text-amber-800",
+  shipped: "bg-brand-100 text-brand-800",
+  ongoing: "bg-gray-100 text-gray-700",
+};
+---
+
+<span class:list={["inline-block px-2.5 py-0.5 rounded-full text-xs font-medium", statusColors[status]]}>
+  {t(locale, `status.${status}` as any)}
+</span>

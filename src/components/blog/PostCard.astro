@@ -1,0 +1,31 @@
+---
+import type { BlogCategory, Locale } from "@/lib/types";
+import { formatDate } from "@/lib/utils";
+import { t } from "@/i18n/utils";
+import Tag from "@components/ui/Tag.astro";
+
+interface Props {
+  title: string;
+  date: Date;
+  category: BlogCategory;
+  readingTime: number;
+  excerpt: string;
+  href: string;
+  locale: Locale;
+}
+
+const { title, date, category, readingTime, excerpt, href, locale } = Astro.props;
+---
+
+<a href={href} class="block group glass-card p-6">
+  <div class="mb-3">
+    <Tag label={t(locale, `category.${category}` as any)} color={category} />
+  </div>
+  <h3 class="text-lg font-semibold mb-2 transition-colors" style="color: var(--color-text-primary);">{title}</h3>
+  <p class="text-sm mb-4 line-clamp-2" style="color: var(--color-text-secondary);">{excerpt}</p>
+  <div class="flex items-center gap-2 text-xs" style="color: var(--color-text-muted);">
+    <time datetime={date.toISOString()}>{formatDate(date, locale)}</time>
+    <span>&middot;</span>
+    <span>{readingTime} {t(locale, "blog.minRead")}</span>
+  </div>
+</a>

@@ -1,0 +1,56 @@
+---
+import type { Locale } from "@/lib/types";
+import { t } from "@/i18n/utils";
+import Button from "@components/ui/Button.astro";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+---
+
+<section class="py-20 sm:py-32 relative">
+  <div class="max-w-3xl">
+    <!-- Eyebrow -->
+    <div class="flex items-center gap-3 mb-6">
+      <span class="inline-block w-12 h-px" style="background: var(--color-accent);"></span>
+      <span class="text-sm font-semibold tracking-widest uppercase" style="color: var(--color-accent);">
+        {locale === "he" ? "סטודנט · סוחר · בונה" : "Student · Trader · Builder"}
+      </span>
+    </div>
+
+    <!-- Name -->
+    <h1 class="mb-4" style="color: var(--color-text-primary);">
+      <span class="gradient-text">Eyal</span> MorYosef
+    </h1>
+
+    <!-- Headline -->
+    <p class="text-xl sm:text-2xl leading-relaxed mb-4" style="color: var(--color-text-secondary);">
+      {t(locale, "home.hero.headline")}
+    </p>
+
+    <!-- Sub-description -->
+    <p class="text-base mb-10" style="color: var(--color-text-muted);">
+      {locale === "he"
+        ? "סטודנט למדמ\"ח ופיזיקה, סוחר אלגוריתמי, רוכב אופני ידיים, ובונה כלים דיגיטליים."
+        : "CS & Physics student, algorithmic trader, handcycle rider, and digital tool builder."}
+      <span class="accent-underline" style="color: var(--color-accent);">
+        {locale === "he" ? "עובד קשה. בונה חכם." : "Work hard. Build smart."}
+      </span>
+    </p>
+
+    <!-- CTA buttons -->
+    <div class="flex flex-wrap gap-4">
+      <Button href={`/${locale}/projects/`} variant="primary">
+        {t(locale, "home.hero.cta")}
+      </Button>
+      <Button href={`/${locale}/about/`} variant="secondary">
+        {locale === "he" ? "אודותיי" : "About Me"}
+      </Button>
+    </div>
+  </div>
+
+  <!-- Decorative gold line -->
+  <div class="absolute bottom-0 left-0 right-0 section-divider"></div>
+</section>

@@ -1,0 +1,33 @@
+---
+/**
+ * StarField — 3-layer twinkling star field, visible only in dark mode.
+ * Layers: 120 small (subtle), 60 medium (classic), 18 large (gold glow).
+ */
+---
+
+<div class="star-field" id="starField" aria-hidden="true"></div>
+
+<script>
+  function generateStars() {
+    const field = document.getElementById('starField');
+    if (!field) return;
+    field.innerHTML = '';
+    const layers = [
+      { cls: 'star star--sm', count: 120, delayMax: 6 },
+      { cls: 'star star--md', count: 60,  delayMax: 5 },
+      { cls: 'star star--lg', count: 18,  delayMax: 7 },
+    ];
+    layers.forEach(l => {
+      for (let i = 0; i < l.count; i++) {
+        const s = document.createElement('div');
+        s.className = l.cls;
+        s.style.left = Math.random() * 100 + '%';
+        s.style.top  = Math.random() * 100 + '%';
+        s.style.animationDelay = (Math.random() * l.delayMax).toFixed(1) + 's';
+        field.appendChild(s);
+      }
+    });
+  }
+  generateStars();
+  document.addEventListener('astro:after-swap', generateStars);
+</script>

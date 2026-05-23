@@ -1,0 +1,66 @@
+---
+import type { BlogCategory, Locale } from "@/lib/types";
+import { t } from "@/i18n/utils";
+
+interface Props {
+  locale: Locale;
+  activeCategory: BlogCategory | "all";
+}
+
+const { locale, activeCategory } = Astro.props;
+
+const categories: { key: BlogCategory | "all"; label: string }[] = [
+  { key: "all", label: t(locale, "blog.all") },
+  { key: "tech", label: t(locale, "category.tech") },
+  { key: "sport", label: t(locale, "category.sport") },
+  { key: "human-nature", label: t(locale, "category.human-nature") },
+];
+---
+
+<div class="flex flex-wrap gap-2 mb-8" role="tablist" aria-label="Filter by category">
+  {categories.map((cat) => (
+    <button
+      class:list={[
+        "px-4 py-2 rounded-lg text-sm font-medium transition-colors category-btn",
+        cat.key === activeCategory
+          ? "bg-brand-600 text-white"
+          : "bg-gray-100 text-text-secondary hover:bg-gray-200",
+      ]}
+      data-category={cat.key}
+      role="tab"
+      aria-selected={cat.key === activeCategory ? "true" : "false"}
+    >
+      {cat.label}
+    </button>
+  ))}
+</div>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const buttons = document.querySelectorAll('.category-btn');
+    const posts = document.querySelectorAll('[data-post-category]');
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const category = btn.getAttribute('data-category');
+
+        buttons.forEach(b => {
+          b.classList.remove('bg-brand-600', 'text-white');
+          b.classList.add('bg-gray-100', 'text-text-secondary');
+          b.setAttribute('aria-selected', 'false');
+        });
+        btn.classList.add('bg-brand-600', 'text-white');
+        btn.classList.remove('bg-gray-100', 'text-text-secondary');
+        btn.setAttribute('aria-selected', 'true');
+
+        posts.forEach(post => {
+          if (category === 'all' || post.getAttribute('data-post-category') === category) {
+            post.style.display = '';
+          } else {
+            post.style.display = 'none';
+          }
+        });
+      });
+    });
+  });
+</script>

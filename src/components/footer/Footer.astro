@@ -1,0 +1,41 @@
+---
+import type { Locale } from "@/lib/types";
+import { SOCIAL_LINKS } from "@/lib/constants";
+import { t } from "@/i18n/utils";
+import Container from "@components/ui/Container.astro";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+---
+
+<footer class="mt-20 py-8" style="border-top: 1px solid var(--color-border);">
+  <Container>
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p class="text-sm" style="color: var(--color-text-muted);">
+        &copy; {new Date().getFullYear()} <span style="color: var(--color-accent);">Eyal MorYosef</span>
+      </p>
+
+      <div class="flex items-center gap-4">
+        {SOCIAL_LINKS.map((link) => (
+          <a
+            href={link.url}
+            class="text-sm transition-colors"
+            style="color: var(--color-text-muted);"
+            target={link.platform !== "email" ? "_blank" : undefined}
+            rel={link.platform !== "email" ? "noopener noreferrer" : undefined}
+            aria-label={link.label}
+          >
+            {link.label}
+          </a>
+        ))}
+      </div>
+
+      <p class="text-xs" style="color: var(--color-text-muted);">
+        {t(locale, "footer.credit")}
+      </p>
+    </div>
+  </Container>
+</footer>

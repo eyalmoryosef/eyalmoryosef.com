@@ -1,0 +1,59 @@
+---
+import PageLayout from "@layouts/PageLayout.astro";
+import SectionHeading from "@components/ui/SectionHeading.astro";
+import { t } from "@/i18n/utils";
+import { websiteJsonLd } from "@/lib/seo";
+
+const locale = "he";
+---
+
+<PageLayout
+  title={t(locale, "now.title")}
+  description="מה אייל מוריוסף עושה עכשיו."
+  locale={locale}
+  jsonLd={websiteJsonLd()}
+  narrow={true}
+>
+  <SectionHeading title={t(locale, "now.title")} as="h1" />
+  <p class="text-text-muted text-sm mb-8">
+    {t(locale, "now.lastUpdated")}: מאי 2026
+  </p>
+
+  <div class="space-y-10">
+    <section>
+      <h2 class="text-xl font-semibold mb-4">{t(locale, "now.building")}</h2>
+      <ul class="space-y-3 text-text-secondary">
+        <li>
+          <strong class="text-text-primary">מסחר אלגוריתמי</strong> — בוט מסחר חי על FXCM (זהב + נאסד"ק). אסטרטגיית מומנטום Heiken Ashi, אוטומטי לחלוטין.
+        </li>
+        <li>
+          <strong class="text-text-primary">SmartPhysio</strong> — כלי מדידה דיגיטלי לפיזיותרפיסטים. ניתוח הליכה לביש עם חיישני IMU. כרגע בשלב פיילוט היתכנות.
+        </li>
+        <li>
+          <strong class="text-text-primary">אופני ידיים</strong> — רוכב עם עמותת אתגרים. בונה סיבולת ודוחף גבולות.
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2 class="text-xl font-semibold mb-4">{t(locale, "now.studying")}</h2>
+      <ul class="space-y-3 text-text-secondary">
+        <li>
+          <strong class="text-text-primary">חדו"א 2 (אינפי 2)</strong> — האוניברסיטה הפתוחה. טורים, אינטגרלים, וחשבון רב-משתנים.
+        </li>
+        <li>
+          <strong class="text-text-primary">מכניקה</strong> — האוניברסיטה הפתוחה. מכניקה קלאסית ופתרון בעיות.
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2 class="text-xl font-semibold mb-4">{t(locale, "now.thinking")}</h2>
+      <ul class="space-y-3 text-text-secondary">
+        <li>איך זיכרון מתמשך משנה את הפרודוקטיביות של סוכני AI</li>
+        <li>ההקבלות בין משמעת ספורטיבית להנדסת תוכנה</li>
+        <li>למה המנטליות של כריסטיאנו רונאלדו — לעבוד יותר מכולם — רלוונטית לבניית מוצרים</li>
+      </ul>
+    </section>
+  </div>
+</PageLayout>

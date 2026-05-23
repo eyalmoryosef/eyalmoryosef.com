@@ -1,0 +1,23 @@
+---
+import type { Locale } from "@/lib/types";
+import { SKILLS } from "@/lib/constants";
+import { t } from "@/i18n/utils";
+import SectionHeading from "@components/ui/SectionHeading.astro";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+---
+
+<section class="py-8">
+  <SectionHeading title={t(locale, "about.skills")} />
+  <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+    {SKILLS.map((skill) => (
+      <div class="flex items-center justify-center px-4 py-3 rounded-lg border border-border bg-surface-alt text-sm font-medium text-text-secondary hover:border-brand-300 hover:text-brand-600 transition-colors">
+        {skill}
+      </div>
+    ))}
+  </div>
+</section>

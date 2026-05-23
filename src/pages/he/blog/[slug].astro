@@ -1,0 +1,66 @@
+---
+import BlogPostLayout from "@layouts/BlogPostLayout.astro";
+import { getCollection, render } from "astro:content";
+import { parseContentId, getReadingTime } from "@/lib/utils";
+import { blogPostJsonLd } from "@/lib/seo";
+import { SITE } from "@/lib/constants";
+
+const locale = "he";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog", (entry) => {
+    const { locale: l } = parseContentId(entry.id);
+    return l === "he" && !entry.data.draft;
+  });
+
+  const allPosts = await getCollection("blog", (entry) => {
+    const { locale: l } = parseContentId(entry.id);
+    return l === "he" && !entry.data.draft;
+  });
+
+  return posts.map((post) => {
+    const { slug } = parseContentId(post.id);
+    const related = allPosts
+      .filter((p) => p.id !== post.id && p.data.category === post.data.category)
+      .slice(0, 3);
+
+    return {
+      params: { slug },
+      props: { post, relatedPosts: related },
+    };
+  });
+}
+
+const { post, relatedPosts } = Astro.props;
+const { Content } = await render(post);
+const { slug } = parseContentId(post.id);
+const canonicalUrl = `${SITE.url}/${locale}/blog/${slug}/`;
+const readingTime = post.body ? getReadingTime(post.body) : 5;
+
+const jsonLd = blogPostJsonLd({
+  title: post.data.title,
+  description: post.data.description,
+  date: post.data.date.toISOString(),
+  url: canonicalUrl,
+  image: post.data.ogImage ? `${SITE.url}${post.data.ogImage}` : undefined,
+});
+---
+
+<BlogPostLayout
+  title={post.data.title}
+  description={post.data.description}
+  locale={locale}
+  canonicalUrl={canonicalUrl}
+  ogImage={post.data.ogImage}
+  post={{
+    title: post.data.title,
+    date: post.data.date,
+    category: post.data.category,
+    readingTime,
+    slug,
+  }}
+  relatedPosts={relatedPosts}
+  jsonLd={jsonLd}
+>
+  <Content />
+</BlogPostLayout>

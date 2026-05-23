@@ -1,0 +1,34 @@
+---
+import type { Locale } from "@/lib/types";
+import { localeConfig } from "@/i18n/config";
+import { getLocalizedPath } from "@/i18n/utils";
+
+interface Props {
+  locale: Locale;
+  currentPath: string;
+}
+
+const { locale, currentPath } = Astro.props;
+
+const languages: Locale[] = ["en", "he"];
+---
+
+<div class="flex items-center gap-1 text-sm">
+  {languages.map((lang, i) => (
+    <>
+      {i > 0 && <span class="text-gray-300">|</span>}
+      <a
+        href={getLocalizedPath(currentPath, lang)}
+        class:list={[
+          "px-1.5 py-0.5 rounded transition-colors",
+          lang === locale
+            ? "font-bold text-brand-600"
+            : "text-text-secondary hover:text-brand-600",
+        ]}
+        aria-label={`Switch to ${localeConfig[lang].label}`}
+      >
+        {localeConfig[lang].label}
+      </a>
+    </>
+  ))}
+</div>

@@ -1,0 +1,36 @@
+---
+import type { Locale } from "@/lib/types";
+import type { CollectionEntry } from "astro:content";
+import { t } from "@/i18n/utils";
+import { parseContentId, formatDate, getReadingTime } from "@/lib/utils";
+import PostCard from "./PostCard.astro";
+
+interface Props {
+  posts: CollectionEntry<"blog">[];
+  locale: Locale;
+}
+
+const { posts, locale } = Astro.props;
+---
+
+{posts.length > 0 && (
+  <div class="mt-12">
+    <h3 class="text-xl font-semibold mb-6">{t(locale, "blog.relatedPosts")}</h3>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {posts.slice(0, 3).map((post) => {
+        const { slug } = parseContentId(post.id);
+        return (
+          <PostCard
+            title={post.data.title}
+            date={post.data.date}
+            category={post.data.category}
+            readingTime={post.body ? getReadingTime(post.body) : 5}
+            excerpt={post.data.description}
+            href={`/${locale}/blog/${slug}/`}
+            locale={locale}
+          />
+        );
+      })}
+    </div>
+  </div>
+)}

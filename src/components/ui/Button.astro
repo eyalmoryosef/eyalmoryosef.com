@@ -1,0 +1,65 @@
+---
+import type { ButtonVariant } from "@/lib/types";
+
+interface Props {
+  href?: string;
+  variant?: ButtonVariant;
+  class?: string;
+  type?: "button" | "submit";
+}
+
+const { href, variant = "primary", class: className = "", type = "button" } = Astro.props;
+
+const baseClasses = "inline-flex items-center justify-center px-6 py-2.5 rounded-lg font-medium transition-all duration-300 text-sm";
+
+const variantStyles: Record<ButtonVariant, string> = {
+  primary: "nebula-btn-primary",
+  secondary: "nebula-btn-secondary",
+  ghost: "nebula-btn-ghost",
+};
+
+const classes = `${baseClasses} ${variantStyles[variant]} ${className}`;
+---
+
+{href ? (
+  <a href={href} class={classes}>
+    <slot />
+  </a>
+) : (
+  <button type={type} class={classes}>
+    <slot />
+  </button>
+)}
+
+<style>
+  .nebula-btn-primary {
+    background: linear-gradient(135deg, var(--color-brand-600), var(--color-brand-500));
+    color: white;
+    border: 1px solid transparent;
+    box-shadow: 0 2px 12px var(--color-border-glow);
+  }
+  .nebula-btn-primary:hover {
+    box-shadow: 0 4px 20px var(--color-accent-glow);
+    transform: translateY(-1px);
+  }
+
+  .nebula-btn-secondary {
+    background: transparent;
+    border: 1.5px solid var(--color-accent);
+    color: var(--color-accent);
+  }
+  .nebula-btn-secondary:hover {
+    background: var(--color-accent-glow);
+    box-shadow: 0 0 20px var(--color-accent-glow);
+  }
+
+  .nebula-btn-ghost {
+    background: transparent;
+    color: var(--color-accent);
+    border: 1px solid transparent;
+  }
+  .nebula-btn-ghost:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+</style>

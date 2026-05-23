@@ -1,0 +1,35 @@
+---
+import type { Locale } from "@/lib/types";
+import type { CollectionEntry } from "astro:content";
+import { t } from "@/i18n/utils";
+import { parseContentId } from "@/lib/utils";
+import SectionHeading from "@components/ui/SectionHeading.astro";
+import ProjectCard from "@components/projects/ProjectCard.astro";
+
+interface Props {
+  locale: Locale;
+  projects: CollectionEntry<"projects">[];
+}
+
+const { locale, projects } = Astro.props;
+---
+
+<section class="py-12">
+  <SectionHeading title={t(locale, "home.featured.title")} />
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {projects.map((project) => {
+      const { slug } = parseContentId(project.id);
+      return (
+        <ProjectCard
+          title={project.data.title}
+          description={project.data.description}
+          category={project.data.category}
+          status={project.data.status}
+          techStack={project.data.techStack}
+          href={`/${locale}/projects/${slug}/`}
+          locale={locale}
+        />
+      );
+    })}
+  </div>
+</section>

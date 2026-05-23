@@ -1,0 +1,59 @@
+---
+/**
+ * ThemeToggle — Moon/Sun button to toggle dark/light mode.
+ * Persists preference in localStorage.
+ */
+---
+
+<button
+  class="theme-toggle-btn"
+  id="themeToggle"
+  aria-label="Toggle dark/light mode"
+  title="Toggle theme"
+>
+  <span id="themeIcon">☽</span>
+</button>
+
+<script>
+  function initTheme() {
+    const saved = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (saved === 'dark' || (!saved && prefersDark)) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      updateIcon('dark');
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+      updateIcon('light');
+    }
+  }
+
+  function updateIcon(mode: string) {
+    const icon = document.getElementById('themeIcon');
+    if (icon) icon.textContent = mode === 'dark' ? '☀' : '☽';
+  }
+
+  function toggleTheme() {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    if (isDark) {
+      document.documentElement.removeAttribute('data-theme');
+      localStorage.setItem('theme', 'light');
+      updateIcon('light');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      localStorage.setItem('theme', 'dark');
+      updateIcon('dark');
+    }
+  }
+
+  // Init on load
+  initTheme();
+
+  // Bind click
+  document.getElementById('themeToggle')?.addEventListener('click', toggleTheme);
+
+  // Re-init on Astro page transitions
+  document.addEventListener('astro:after-swap', () => {
+    initTheme();
+    document.getElementById('themeToggle')?.addEventListener('click', toggleTheme);
+  });
+</script>

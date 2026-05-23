@@ -1,0 +1,40 @@
+---
+import PageLayout from "@layouts/PageLayout.astro";
+import SectionHeading from "@components/ui/SectionHeading.astro";
+import SkillsGrid from "@components/about/SkillsGrid.astro";
+import ContactForm from "@components/about/ContactForm.astro";
+import { t } from "@/i18n/utils";
+import { websiteJsonLd, personJsonLd } from "@/lib/seo";
+
+const locale = "he";
+---
+
+<PageLayout
+  title={t(locale, "about.title")}
+  description="אודות אייל מוריוסף — מפתח AI, סוחר אלגוריתמי, וסטודנט באוניברסיטה שבונה מערכות שלומדות."
+  locale={locale}
+  jsonLd={websiteJsonLd()}
+>
+  <SectionHeading title={t(locale, "about.title")} as="h1" />
+
+  <div class="prose prose-lg max-w-none mb-12">
+    <p>
+      אני אייל מוריוסף. סטודנט באוניברסיטה שמתלבט בין מדעי המחשב ופיזיקה להנדסה ביורפואית. עובד בחצי משרה בגן האירועים מקדם, רוכב אופני ידיים בעמותת אתגרים, ובונה דברים בצד.
+    </p>
+    <p>
+      אני בונה <strong>מערכות מסחר אלגוריתמי</strong> — אסטרטגיות מומנטום Heiken Ashi עם יצירת אותות אוטומטית, נבדקו בבקטסט ורצות חי על FXCM.
+    </p>
+    <p>
+      אני מפתח את <strong>SmartPhysio</strong> — כלי מדידה דיגיטלי לפיזיותרפיסטים. ניתוח הליכה לביש באמצעות חיישני IMU, להחלפת הערכות קליניות סובייקטיביות בנתונים אובייקטיביים.
+    </p>
+    <p>
+      אני כותב על שלושה דברים: <strong>טכנולוגיה</strong> (מערכות AI, ארכיטקטורה, אוטומציה), <strong>ספורט</strong> (משמעת, ביצועים, מנטליות), ו<strong>טבע אנושי</strong> (איך אנחנו חושבים, לומדים, ומקבלים החלטות).
+    </p>
+    <p>
+      מודל המנטליות שלי הוא כריסטיאנו רונאלדו — לא בגלל הכישרון, אלא בגלל אתיקת העבודה הבלתי מתפשרת. האנשים שמנצחים הם אלה שעובדים יותר מכולם.
+    </p>
+  </div>
+
+  <SkillsGrid locale={locale} />
+  <ContactForm locale={locale} />
+</PageLayout>

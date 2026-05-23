@@ -1,0 +1,22 @@
+---
+interface Props {
+  label: string;
+  color?: "tech" | "sport" | "human-nature" | "default";
+  size?: "sm" | "md";
+}
+
+const { label, color = "default", size = "sm" } = Astro.props;
+
+const colorClasses: Record<string, string> = {
+  tech: "bg-brand-100 text-brand-800",
+  sport: "bg-green-100 text-green-800",
+  "human-nature": "bg-orange-100 text-orange-800",
+  default: "bg-gray-100 text-gray-700",
+};
+
+const sizeClasses = size === "sm" ? "px-2 py-0.5 text-xs" : "px-3 py-1 text-sm";
+---
+
+<span class:list={["inline-block rounded-full font-medium", colorClasses[color], sizeClasses]}>
+  {label}
+</span>

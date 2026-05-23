@@ -1,0 +1,59 @@
+---
+import type { Locale } from "@/lib/types";
+import { t } from "@/i18n/utils";
+
+interface Props {
+  title: string;
+  url: string;
+  locale: Locale;
+}
+
+const { title, url, locale } = Astro.props;
+
+const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`;
+const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+---
+
+<div class="flex items-center gap-4 mb-8">
+  <span class="text-text-muted text-sm font-medium">{locale === "he" ? "שתף:" : "Share:"}</span>
+  <a
+    href={twitterUrl}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="text-text-secondary hover:text-brand-600 text-sm transition-colors"
+  >
+    {t(locale, "share.twitter")}
+  </a>
+  <a
+    href={linkedinUrl}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="text-text-secondary hover:text-brand-600 text-sm transition-colors"
+  >
+    {t(locale, "share.linkedin")}
+  </a>
+  <button
+    id="copy-link-btn"
+    class="text-text-secondary hover:text-brand-600 text-sm transition-colors cursor-pointer"
+    data-url={url}
+  >
+    {t(locale, "share.copy")}
+  </button>
+</div>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('copy-link-btn');
+    if (btn) {
+      btn.addEventListener('click', async () => {
+        const url = btn.getAttribute('data-url');
+        if (url) {
+          await navigator.clipboard.writeText(url);
+          const original = btn.textContent;
+          btn.textContent = btn.closest('[dir="rtl"]') ? 'הועתק!' : 'Copied!';
+          setTimeout(() => { btn.textContent = original; }, 2000);
+        }
+      });
+    }
+  });
+</script>

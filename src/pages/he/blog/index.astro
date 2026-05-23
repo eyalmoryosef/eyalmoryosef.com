@@ -1,0 +1,50 @@
+---
+import PageLayout from "@layouts/PageLayout.astro";
+import SectionHeading from "@components/ui/SectionHeading.astro";
+import CategoryFilter from "@components/blog/CategoryFilter.astro";
+import PostCard from "@components/blog/PostCard.astro";
+import { getCollection } from "astro:content";
+import { parseContentId, getReadingTime } from "@/lib/utils";
+import { t } from "@/i18n/utils";
+import { websiteJsonLd } from "@/lib/seo";
+
+const locale = "he";
+
+const posts = await getCollection("blog", (entry) => {
+  const { locale: l } = parseContentId(entry.id);
+  return l === locale && !entry.data.draft;
+});
+const sorted = posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+---
+
+<PageLayout
+  title={t(locale, "blog.title")}
+  description="הבלוג של אייל מורי-יוסף — כתיבה על טכנולוגיה, ספורט וטבע אנושי."
+  locale={locale}
+  jsonLd={websiteJsonLd()}
+>
+  <SectionHeading
+    title={t(locale, "blog.title")}
+    subtitle={t(locale, "blog.subtitle")}
+    as="h1"
+  />
+  <CategoryFilter locale={locale} activeCategory="all" />
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    {sorted.map((post) => {
+      const { slug } = parseContentId(post.id);
+      return (
+        <div data-post-category={post.data.category}>
+          <PostCard
+            title={post.data.title}
+            date={post.data.date}
+            category={post.data.category}
+            readingTime={post.body ? getReadingTime(post.body) : 5}
+            excerpt={post.data.description}
+            href={`/${locale}/blog/${slug}/`}
+            locale={locale}
+          />
+        </div>
+      );
+    })}
+  </div>
+</PageLayout>

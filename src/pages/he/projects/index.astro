@@ -1,0 +1,46 @@
+---
+import PageLayout from "@layouts/PageLayout.astro";
+import SectionHeading from "@components/ui/SectionHeading.astro";
+import ProjectCard from "@components/projects/ProjectCard.astro";
+import { getCollection } from "astro:content";
+import { parseContentId } from "@/lib/utils";
+import { t } from "@/i18n/utils";
+import { websiteJsonLd } from "@/lib/seo";
+
+const locale = "he";
+
+const projects = await getCollection("projects", (entry) => {
+  const { locale: l } = parseContentId(entry.id);
+  return l === locale;
+});
+const sorted = projects.sort((a, b) => a.data.order - b.data.order);
+---
+
+<PageLayout
+  title={t(locale, "projects.title")}
+  description="פרויקטים של אייל מורי-יוסף — מערכות AI, אלגוריתמי מסחר, וכלי edtech."
+  locale={locale}
+  jsonLd={websiteJsonLd()}
+>
+  <SectionHeading
+    title={t(locale, "projects.title")}
+    subtitle={t(locale, "projects.subtitle")}
+    as="h1"
+  />
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {sorted.map((project) => {
+      const { slug } = parseContentId(project.id);
+      return (
+        <ProjectCard
+          title={project.data.title}
+          description={project.data.description}
+          category={project.data.category}
+          status={project.data.status}
+          techStack={project.data.techStack}
+          href={`/${locale}/projects/${slug}/`}
+          locale={locale}
+        />
+      );
+    })}
+  </div>
+</PageLayout>

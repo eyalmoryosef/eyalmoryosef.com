@@ -1,0 +1,32 @@
+---
+import type { ProjectCategory, ProjectStatus, Locale } from "@/lib/types";
+import StatusBadge from "./StatusBadge.astro";
+import TechBadge from "./TechBadge.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  category: ProjectCategory;
+  status: ProjectStatus;
+  techStack: string[];
+  href: string;
+  locale: Locale;
+}
+
+const { title, description, category, status, techStack, href, locale } = Astro.props;
+---
+
+<a href={href} class="block group glass-card p-6">
+  <div class="flex items-start justify-between mb-3">
+    <h3 class="text-lg font-semibold transition-colors" style="color: var(--color-text-primary);">
+      <span class="group-hover:gradient-text transition-colors">{title}</span>
+    </h3>
+    <StatusBadge status={status} locale={locale} />
+  </div>
+  <p class="text-sm mb-4 line-clamp-2" style="color: var(--color-text-secondary);">{description}</p>
+  <div class="flex flex-wrap gap-1.5">
+    {techStack.map((tech) => (
+      <TechBadge label={tech} />
+    ))}
+  </div>
+</a>

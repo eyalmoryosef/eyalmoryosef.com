@@ -1,0 +1,78 @@
+---
+import type { Locale } from "@/lib/types";
+import { localeConfig } from "@/i18n/config";
+import { SITE } from "@/lib/constants";
+import SEOHead from "@components/seo/SEOHead.astro";
+import JsonLd from "@components/seo/JsonLd.astro";
+import StarField from "@components/effects/StarField.astro";
+import NebulaBg from "@components/effects/NebulaBg.astro";
+import "@/styles/global.css";
+
+interface Props {
+  title: string;
+  description: string;
+  locale: Locale;
+  ogImage?: string;
+  ogType?: "website" | "article";
+  canonicalUrl?: string;
+  jsonLd?: object;
+  noIndex?: boolean;
+  publishedDate?: string;
+}
+
+const {
+  title,
+  description,
+  locale,
+  ogImage,
+  ogType = "website",
+  canonicalUrl = `${SITE.url}${Astro.url.pathname}`,
+  jsonLd,
+  noIndex = false,
+  publishedDate,
+} = Astro.props;
+
+const dir = localeConfig[locale].dir;
+---
+
+<!DOCTYPE html>
+<html lang={locale} dir={dir}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="alternate" type="application/rss+xml" title={SITE.name} href="/rss.xml" />
+    <SEOHead
+      title={title}
+      description={description}
+      locale={locale}
+      canonicalUrl={canonicalUrl}
+      ogImage={ogImage}
+      ogType={ogType}
+      publishedDate={publishedDate}
+      noIndex={noIndex}
+    />
+    {jsonLd && <JsonLd data={jsonLd} />}
+    <!-- Prevent FOUC: apply saved theme before paint -->
+    <script is:inline>
+      (function() {
+        const saved = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (saved === 'dark' || (!saved && prefersDark)) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      })();
+    </script>
+  </head>
+  <body class="relative">
+    <!-- Background effects layer -->
+    <StarField />
+    <NebulaBg />
+
+    <!-- Content layer -->
+    <div class="relative z-10">
+      <slot />
+    </div>
+  </body>
+</html>

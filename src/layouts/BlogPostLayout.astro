@@ -1,0 +1,59 @@
+---
+import type { Locale, BlogCategory } from "@/lib/types";
+import type { CollectionEntry } from "astro:content";
+import PageLayout from "./PageLayout.astro";
+import Tag from "@components/ui/Tag.astro";
+import ShareLinks from "@components/blog/ShareLinks.astro";
+import RelatedPosts from "@components/blog/RelatedPosts.astro";
+import { formatDate } from "@/lib/utils";
+import { t } from "@/i18n/utils";
+
+interface Props {
+  title: string;
+  description: string;
+  locale: Locale;
+  ogImage?: string;
+  canonicalUrl: string;
+  post: {
+    title: string;
+    date: Date;
+    category: BlogCategory;
+    readingTime: number;
+    slug: string;
+  };
+  relatedPosts: CollectionEntry<"blog">[];
+  jsonLd: object;
+}
+
+const { locale, post, relatedPosts, canonicalUrl, jsonLd, ...rest } = Astro.props;
+const formattedDate = formatDate(post.date, locale);
+---
+
+<PageLayout
+  locale={locale}
+  canonicalUrl={canonicalUrl}
+  jsonLd={jsonLd}
+  ogType="article"
+  publishedDate={post.date.toISOString()}
+  narrow={true}
+  {...rest}
+>
+  <article class="prose prose-lg max-w-none">
+    <header class="mb-8">
+      <Tag label={t(locale, `category.${post.category}` as any)} color={post.category} />
+      <h1 class="mt-3">{post.title}</h1>
+      <p class="text-text-secondary">
+        {formattedDate} &middot; {post.readingTime} {t(locale, "blog.minRead")}
+      </p>
+    </header>
+
+    <slot />
+
+    <footer class="mt-12 border-t border-border pt-8">
+      <ShareLinks title={post.title} url={canonicalUrl} locale={locale} />
+      {relatedPosts.length > 0 && (
+        <RelatedPosts posts={relatedPosts} locale={locale} />
+      )}
+    </footer>
+  </article>
+</PageLayout>
