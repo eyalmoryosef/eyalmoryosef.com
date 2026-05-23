@@ -3,38 +3,23 @@ import PageLayout from "@layouts/PageLayout.astro";
 import SectionHeading from "@components/ui/SectionHeading.astro";
 import SkillsGrid from "@components/about/SkillsGrid.astro";
 import ContactForm from "@components/about/ContactForm.astro";
+import AboutBody from "@components/pages/AboutBody.astro";
 import { t } from "@/i18n/utils";
-import { websiteJsonLd, personJsonLd } from "@/lib/seo";
+import { websiteJsonLd } from "@/lib/seo";
+import { getAboutContent } from "@/lib/page-content";
 
 const locale = "en";
+const about = getAboutContent(locale);
 ---
 
 <PageLayout
   title={t(locale, "about.title")}
-  description="About Eyal MorYosef — AI developer, algorithmic trader, and university student building systems that learn."
+  description={about.metaDescription}
   locale={locale}
   jsonLd={websiteJsonLd()}
 >
   <SectionHeading title={t(locale, "about.title")} as="h1" />
-
-  <div class="prose prose-lg max-w-none mb-12">
-    <p>
-      I'm Eyal MorYosef. A university student deciding between Computer Science & Physics and Biomedical Engineering. I work part-time at Mikadam event venue, ride handcycles with Etgarim association, and build things on the side.
-    </p>
-    <p>
-      I build <strong>algorithmic trading systems</strong> — Heiken Ashi momentum strategies with automated signal generation, backtested and deployed live on FXCM.
-    </p>
-    <p>
-      I'm developing <strong>SmartPhysio</strong> — a digital measurement tool for physiotherapists. Wearable gait analysis using IMU sensors to replace subjective clinical assessments with objective data.
-    </p>
-    <p>
-      I write about three things: <strong>Tech</strong> (AI systems, architecture, automation), <strong>Sport</strong> (discipline, performance, mentality), and <strong>Human Nature</strong> (how we think, learn, and make decisions).
-    </p>
-    <p>
-      My mentality benchmark is Cristiano Ronaldo — not because of talent, but because of relentless work ethic. The people who win are the ones who outwork everyone else. That applies to code, to trading, and to life.
-    </p>
-  </div>
-
+  <AboutBody locale={locale} />
   <SkillsGrid locale={locale} />
   <ContactForm locale={locale} />
 </PageLayout>

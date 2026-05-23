@@ -1,0 +1,49 @@
+---
+import type { Locale } from "@/lib/types";
+import { t } from "@/i18n/utils";
+import { getNowContent } from "@/lib/page-content";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const content = getNowContent(locale);
+---
+
+<p class="text-text-muted text-sm mb-8">
+  {t(locale, "now.lastUpdated")}: {content.lastUpdated}
+</p>
+
+<div class="space-y-10">
+  <section>
+    <h2 class="text-xl font-semibold mb-4">{t(locale, "now.building")}</h2>
+    <ul class="space-y-3 text-text-secondary">
+      {content.building.map((item) => (
+        <li>
+          <strong class="text-text-primary">{item.title}</strong> — {item.text}
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="text-xl font-semibold mb-4">{t(locale, "now.studying")}</h2>
+    <ul class="space-y-3 text-text-secondary">
+      {content.studying.map((item) => (
+        <li>
+          <strong class="text-text-primary">{item.title}</strong> — {item.text}
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="text-xl font-semibold mb-4">{t(locale, "now.thinking")}</h2>
+    <ul class="space-y-3 text-text-secondary">
+      {content.thinking.map((item) => (
+        <li>{item}</li>
+      ))}
+    </ul>
+  </section>
+</div>

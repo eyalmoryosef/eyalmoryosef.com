@@ -7,6 +7,7 @@ import NowStrip from "@components/home/NowStrip.astro";
 import { getCollection } from "astro:content";
 import { parseContentId } from "@/lib/utils";
 import { websiteJsonLd, personJsonLd } from "@/lib/seo";
+import { t } from "@/i18n/utils";
 
 const locale = "he";
 
@@ -25,12 +26,12 @@ const latestPosts = allPosts.sort((a, b) => b.data.date.getTime() - a.data.date.
 
 <PageLayout
   title="בית"
-  description="אייל מוריוסף — בונה, סוחר, כותב. בונה מערכות AI, אלגוריתמי מסחר, וכותב על מה שאני לומד."
+  description={t(locale, "home.pageDescription")}
   locale={locale}
   jsonLd={websiteJsonLd()}
 >
   <Hero locale={locale} />
-  <NowStrip locale={locale} text="מסחר אלגוריתמי, SmartPhysio, רכיבת אופני ידיים" />
+  <NowStrip locale={locale} text={t(locale, "home.now.strip")} />
   <FeaturedProjects locale={locale} projects={featuredProjects} />
   {latestPosts.length > 0 && <LatestPosts locale={locale} posts={latestPosts} />}
 </PageLayout>

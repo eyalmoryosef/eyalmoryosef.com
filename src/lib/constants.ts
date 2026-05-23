@@ -1,7 +1,11 @@
+import { getSiteString } from "@/lib/site-copy";
+
 export const SITE = {
   name: "Eyal MorYosef",
   url: "https://eyalmoryosef.com",
-  description: "Builder, Trader, Writer",
+  get description() {
+    return getSiteString("en", "site.tagline");
+  },
   email: "eyaloosh110@gmail.com",
   formspreeId: "REPLACE_WITH_FORMSPREE_ID",
   analytics: {

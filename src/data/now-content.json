@@ -1,0 +1,68 @@
+{
+  "en": {
+    "metaDescription": "What Eyal MorYosef is working on right now.",
+    "lastUpdated": "May 2026",
+    "building": [
+      {
+        "title": "Algorithmic Trading",
+        "text": "Live trading bot on FXCM (XAU/USD + NAS100). Heiken Ashi momentum strategy, fully automated."
+      },
+      {
+        "title": "SmartPhysio",
+        "text": "Digital measurement tool for physiotherapists. Wearable gait analysis with IMU sensors. Currently in feasibility pilot phase."
+      },
+      {
+        "title": "Handcycle Riding",
+        "text": "Riding with Etgarim association. Building endurance and pushing limits."
+      }
+    ],
+    "studying": [
+      {
+        "title": "Calculus 2 (Infi 2)",
+        "text": "Open University of Israel. Series, integrals, and multivariable calculus."
+      },
+      {
+        "title": "Mechanics",
+        "text": "Open University of Israel. Classical mechanics and problem solving."
+      }
+    ],
+    "thinking": [
+      "How persistent memory transforms AI agent productivity",
+      "The parallels between athletic discipline and software engineering",
+      "Why the Cristiano Ronaldo mentality — outwork everyone — applies to building products"
+    ]
+  },
+  "he": {
+    "metaDescription": "מה אייל מוריוסף עושה עכשיו.",
+    "lastUpdated": "מאי 2026",
+    "building": [
+      {
+        "title": "מסחר אלגוריתמי",
+        "text": "בוט מסחר חי על FXCM (זהב + נאסד\"ק). אסטרטגיית מומנטום Heiken Ashi, אוטומטי לחלוטין."
+      },
+      {
+        "title": "SmartPhysio",
+        "text": "כלי מדידה דיגיטלי לפיזיותרפיסטים. ניתוח הליכה לביש עם חיישני IMU. כרגע בשלב פיילוט היתכנות."
+      },
+      {
+        "title": "אופני ידיים",
+        "text": "רוכב עם עמותת אתגרים. בונה סיבולת ודוחף גבולות."
+      }
+    ],
+    "studying": [
+      {
+        "title": "חדו\"א 2 (אינפי 2)",
+        "text": "האוניברסיטה הפתוחה. טורים, אינטגרלים, וחשבון רב-משתנים."
+      },
+      {
+        "title": "מכניקה",
+        "text": "האוניברסיטה הפתוחה. מכניקה קלאסית ופתרון בעיות."
+      }
+    ],
+    "thinking": [
+      "איך זיכרון מתמשך משנה את הפרודוקטיביות של סוכני AI",
+      "ההקבלות בין משמעת ספורטיבית להנדסת תוכנה",
+      "למה המנטליות של כריסטיאנו רונאלדו — לעבוד יותר מכולם — רלוונטית לבניית מוצרים"
+    ]
+  }
+}

@@ -1,59 +1,22 @@
 ---
 import PageLayout from "@layouts/PageLayout.astro";
 import SectionHeading from "@components/ui/SectionHeading.astro";
+import NowBody from "@components/pages/NowBody.astro";
 import { t } from "@/i18n/utils";
 import { websiteJsonLd } from "@/lib/seo";
+import { getNowContent } from "@/lib/page-content";
 
 const locale = "en";
+const now = getNowContent(locale);
 ---
 
 <PageLayout
   title={t(locale, "now.title")}
-  description="What Eyal MorYosef is working on right now."
+  description={now.metaDescription}
   locale={locale}
   jsonLd={websiteJsonLd()}
   narrow={true}
 >
   <SectionHeading title={t(locale, "now.title")} as="h1" />
-  <p class="text-text-muted text-sm mb-8">
-    {t(locale, "now.lastUpdated")}: May 2026
-  </p>
-
-  <div class="space-y-10">
-    <section>
-      <h2 class="text-xl font-semibold mb-4">{t(locale, "now.building")}</h2>
-      <ul class="space-y-3 text-text-secondary">
-        <li>
-          <strong class="text-text-primary">Algorithmic Trading</strong> — Live trading bot on FXCM (XAU/USD + NAS100). Heiken Ashi momentum strategy, fully automated.
-        </li>
-        <li>
-          <strong class="text-text-primary">SmartPhysio</strong> — Digital measurement tool for physiotherapists. Wearable gait analysis with IMU sensors. Currently in feasibility pilot phase.
-        </li>
-        <li>
-          <strong class="text-text-primary">Handcycle Riding</strong> — Riding with Etgarim association. Building endurance and pushing limits.
-        </li>
-      </ul>
-    </section>
-
-    <section>
-      <h2 class="text-xl font-semibold mb-4">{t(locale, "now.studying")}</h2>
-      <ul class="space-y-3 text-text-secondary">
-        <li>
-          <strong class="text-text-primary">Calculus 2 (Infi 2)</strong> — Open University of Israel. Series, integrals, and multivariable calculus.
-        </li>
-        <li>
-          <strong class="text-text-primary">Mechanics</strong> — Open University of Israel. Classical mechanics and problem solving.
-        </li>
-      </ul>
-    </section>
-
-    <section>
-      <h2 class="text-xl font-semibold mb-4">{t(locale, "now.thinking")}</h2>
-      <ul class="space-y-3 text-text-secondary">
-        <li>How persistent memory transforms AI agent productivity</li>
-        <li>The parallels between athletic discipline and software engineering</li>
-        <li>Why the Cristiano Ronaldo mentality — outwork everyone — applies to building products</li>
-      </ul>
-    </section>
-  </div>
+  <NowBody locale={locale} />
 </PageLayout>

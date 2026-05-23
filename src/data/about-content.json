@@ -1,0 +1,22 @@
+{
+  "en": {
+    "metaDescription": "About Eyal MorYosef — AI developer, algorithmic trader, and university student building systems that learn.",
+    "paragraphs": [
+      "I'm Eyal MorYosef. A university student deciding between Computer Science & Physics and Biomedical Engineering. I work part-time at Mikadam event venue, ride handcycles with Etgarim association, and build things on the side.",
+      "I build <strong>algorithmic trading systems</strong> — Heiken Ashi momentum strategies with automated signal generation, backtested and deployed live on FXCM.",
+      "I'm developing <strong>SmartPhysio</strong> — a digital measurement tool for physiotherapists. Wearable gait analysis using IMU sensors to replace subjective clinical assessments with objective data.",
+      "I write about three things: <strong>Tech</strong> (AI systems, architecture, automation), <strong>Sport</strong> (discipline, performance, mentality), and <strong>Human Nature</strong> (how we think, learn, and make decisions).",
+      "My mentality benchmark is Cristiano Ronaldo — not because of talent, but because of relentless work ethic. The people who win are the ones who outwork everyone else. That applies to code, to trading, and to life."
+    ]
+  },
+  "he": {
+    "metaDescription": "אודות אייל מוריוסף — מפתח AI, סוחר אלגוריתמי, וסטודנט באוניברסיטה שבונה מערכות שלומדות.",
+    "paragraphs": [
+      "אני אייל מוריוסף. סטודנט באוניברסיטה שמתלבט בין מדעי המחשב ופיזיקה להנדסה ביורפואית. עובד בחצי משרה בגן האירועים מקדם, רוכב אופני ידיים בעמותת אתגרים, ובונה דברים בצד.",
+      "אני בונה <strong>מערכות מסחר אלגוריתמי</strong> — אסטרטגיות מומנטום Heiken Ashi עם יצירת אותות אוטומטית, נבדקו בבקטסט ורצות חי על FXCM.",
+      "אני מפתח את <strong>SmartPhysio</strong> — כלי מדידה דיגיטלי לפיזיותרפיסטים. ניתוח הליכה לביש באמצעות חיישני IMU, להחלפת הערכות קליניות סובייקטיביות בנתונים אובייקטיביים.",
+      "אני כותב על שלושה דברים: <strong>טכנולוגיה</strong> (מערכות AI, ארכיטקטורה, אוטומציה), <strong>ספורט</strong> (משמעת, ביצועים, מנטליות), ו<strong>טבע אנושי</strong> (איך אנחנו חושבים, לומדים, ומקבלים החלטות).",
+      "מודל המנטליות שלי הוא כריסטיאנו רונאלדו — לא בגלל הכישרון, אלא בגלל אתיקת העבודה הבלתי מתפשרת. האנשים שמנצחים הם אלה שעובדים יותר מכולם."
+    ]
+  }
+}

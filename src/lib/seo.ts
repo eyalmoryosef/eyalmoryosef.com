@@ -1,10 +1,12 @@
+import { getSiteString } from "@/lib/site-copy";
+
 export function websiteJsonLd() {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: "Eyal MorYosef",
     url: "https://eyalmoryosef.com",
-    description: "Builder, Trader, Writer",
+    description: getSiteString("en", "site.tagline"),
     inLanguage: ["en", "he"],
   };
 }

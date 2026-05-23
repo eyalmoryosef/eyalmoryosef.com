@@ -7,6 +7,7 @@ import NowStrip from "@components/home/NowStrip.astro";
 import { getCollection } from "astro:content";
 import { parseContentId } from "@/lib/utils";
 import { websiteJsonLd, personJsonLd } from "@/lib/seo";
+import { t } from "@/i18n/utils";
 
 const locale = "en";
 
@@ -27,12 +28,12 @@ const jsonLd = [websiteJsonLd(), personJsonLd()];
 
 <PageLayout
   title="Home"
-  description="Eyal MorYosef — Builder, Trader, Writer. Building AI systems, trading algorithms, and writing about what I learn."
+  description={t(locale, "home.pageDescription")}
   locale={locale}
   jsonLd={jsonLd[0]}
 >
   <Hero locale={locale} />
-  <NowStrip locale={locale} text="Algorithmic Trading, SmartPhysio, Handcycle Riding" />
+  <NowStrip locale={locale} text={t(locale, "home.now.strip")} />
   <FeaturedProjects locale={locale} projects={featuredProjects} />
   {latestPosts.length > 0 && <LatestPosts locale={locale} posts={latestPosts} />}
 </PageLayout>

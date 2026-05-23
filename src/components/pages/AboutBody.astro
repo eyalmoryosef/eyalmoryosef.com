@@ -1,0 +1,17 @@
+---
+import type { Locale } from "@/lib/types";
+import { getAboutContent } from "@/lib/page-content";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const content = getAboutContent(locale);
+---
+
+<div class="prose prose-lg max-w-none mb-12">
+  {content.paragraphs.map((paragraph) => (
+    <p set:html={paragraph} />
+  ))}
+</div>

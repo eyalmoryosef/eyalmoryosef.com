@@ -1,0 +1,187 @@
+---
+export const prerender = false;
+
+import "@/styles/admin.css";
+import { verifySessionToken, COOKIE_NAME } from "@/lib/admin/auth";
+import { getAdminConfig } from "@/lib/admin/env";
+
+const config = getAdminConfig();
+const isAuthed = verifySessionToken(Astro.cookies.get(COOKIE_NAME)?.value);
+---
+
+<!doctype html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>ניהול תוכן — eyalmoryosef.com</title>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  </head>
+  <body class="admin-body">
+    <div id="app" class="admin-app" data-authed={isAuthed ? "true" : "false"} data-configured={config.isAuthConfigured ? "true" : "false"}>
+      {!config.isAuthConfigured && (
+        <div class="admin-config-warning">
+          <h1>ממשק הניהול לא מוגדר</h1>
+          <p>ראה <code>ADMIN.md</code> ו-<code>.env.example</code></p>
+        </div>
+      )}
+
+      {config.isAuthConfigured && !isAuthed && (
+        <section class="admin-login">
+          <div class="admin-login-card">
+            <div class="admin-login-brand">
+              <span class="admin-logo">eyal</span><span class="admin-logo-accent">/</span><span>admin</span>
+            </div>
+            <h1>כניסה לניהול תוכן</h1>
+            <form id="login-form" class="admin-form">
+              <label><span>שם משתמש</span><input type="text" name="username" autocomplete="username" required /></label>
+              <label><span>סיסמה</span><input type="password" name="password" autocomplete="current-password" required /></label>
+              <p id="login-error" class="admin-error" hidden></p>
+              <button type="submit" class="admin-btn admin-btn-primary">התחבר</button>
+            </form>
+          </div>
+        </section>
+      )}
+
+      {config.isAuthConfigured && isAuthed && (
+        <div class="admin-shell">
+          <aside class="admin-sidebar">
+            <div class="admin-sidebar-header">
+              <span class="admin-logo">eyal</span><span class="admin-logo-accent">/</span><span>admin</span>
+              <button type="button" id="logout-btn" class="admin-btn admin-btn-ghost admin-btn-sm">יציאה</button>
+            </div>
+
+            <nav class="admin-tabs admin-tabs-wrap">
+              <button type="button" class="admin-tab is-active" data-tab="blog">בלוג</button>
+              <button type="button" class="admin-tab" data-tab="projects">פרויקטים</button>
+              <button type="button" class="admin-tab" data-tab="copy">טקסטים</button>
+              <button type="button" class="admin-tab" data-tab="about">אודות</button>
+              <button type="button" class="admin-tab" data-tab="now">עכשיו</button>
+            </nav>
+
+            <div id="panel-list" class="admin-sidebar-panel">
+              <button type="button" id="new-item-btn" class="admin-btn admin-btn-primary admin-btn-block">+ פריט חדש</button>
+              <select id="filter-locale" class="admin-select">
+                <option value="">כל השפות</option>
+                <option value="he">עברית</option>
+                <option value="en">English</option>
+              </select>
+              <ul id="content-list" class="admin-content-list"></ul>
+            </div>
+
+            <span id="storage-badge" class="admin-badge admin-storage-badge"></span>
+          </aside>
+
+          <main class="admin-main">
+            <!-- Markdown editor (blog + projects) -->
+            <div id="panel-md-main">
+              <div id="editor-empty" class="admin-empty"><p>בחר פריט מהרשימה או צור חדש</p></div>
+              <form id="editor-form" class="admin-editor" hidden>
+                <header class="admin-editor-header">
+                  <div>
+                    <p id="editor-breadcrumb" class="admin-breadcrumb"></p>
+                    <h2 id="editor-title">עריכה</h2>
+                  </div>
+                  <div class="admin-editor-actions">
+                    <button type="button" id="delete-item-btn" class="admin-btn admin-btn-danger" hidden>מחק</button>
+                    <button type="submit" class="admin-btn admin-btn-primary" id="save-btn">שמור</button>
+                  </div>
+                </header>
+                <div id="frontmatter-fields" class="admin-fields"></div>
+                <label class="admin-field admin-field-full">
+                  <span id="body-label">גוף (Markdown)</span>
+                  <textarea id="editor-body" rows="20" spellcheck="false"></textarea>
+                </label>
+                <p id="save-status" class="admin-status" hidden></p>
+              </form>
+            </div>
+
+            <!-- Site copy -->
+            <div id="panel-copy-main" class="admin-hidden">
+              <header class="admin-editor-header">
+                <div><h2>טקסטי אתר</h2><p class="admin-muted">Hero, ניווט, כותרות</p></div>
+              </header>
+              <div class="admin-locale-tabs" data-copy-tabs>
+                <button type="button" class="is-active" data-locale="he">עברית</button>
+                <button type="button" data-locale="en">English</button>
+              </div>
+              <form id="site-copy-form">
+                <div id="site-copy-fields"></div>
+                <button type="submit" class="admin-btn admin-btn-primary">שמור טקסטי אתר</button>
+                <p id="copy-save-status" class="admin-status" hidden></p>
+              </form>
+            </div>
+
+            <!-- About -->
+            <div id="panel-about-main" class="admin-hidden">
+              <header class="admin-editor-header">
+                <div><h2>דף אודות</h2><p class="admin-muted">פסקאות HTML מותר (&lt;strong&gt; וכו')</p></div>
+              </header>
+              <div class="admin-locale-tabs" data-about-tabs>
+                <button type="button" class="is-active" data-locale="he">עברית</button>
+                <button type="button" data-locale="en">English</button>
+              </div>
+              <form id="about-form" class="admin-editor">
+                <label class="admin-field admin-field-full">
+                  <span>תיאור SEO</span>
+                  <textarea name="metaDescription" rows="2"></textarea>
+                </label>
+                <div id="about-paragraphs"></div>
+                <button type="button" id="add-about-paragraph" class="admin-btn admin-btn-ghost">+ הוסף פסקה</button>
+                <button type="submit" class="admin-btn admin-btn-primary">שמור דף אודות</button>
+                <p id="about-save-status" class="admin-status" hidden></p>
+              </form>
+            </div>
+
+            <!-- Now -->
+            <div id="panel-now-main" class="admin-hidden">
+              <header class="admin-editor-header">
+                <div><h2>דף עכשיו</h2></div>
+              </header>
+              <div class="admin-locale-tabs" data-now-tabs>
+                <button type="button" class="is-active" data-locale="he">עברית</button>
+                <button type="button" data-locale="en">English</button>
+              </div>
+              <form id="now-form" class="admin-editor">
+                <label class="admin-field admin-field-full"><span>תיאור SEO</span><textarea name="metaDescription" rows="2"></textarea></label>
+                <label class="admin-field"><span>עודכן לאחרונה</span><input type="text" name="lastUpdated" /></label>
+                <h3 class="admin-section-label">בונה כרגע</h3>
+                <div id="now-building"></div>
+                <button type="button" class="admin-btn admin-btn-ghost add-now-item" data-section="building">+ פריט</button>
+                <h3 class="admin-section-label">לומד כרגע</h3>
+                <div id="now-studying"></div>
+                <button type="button" class="admin-btn admin-btn-ghost add-now-item" data-section="studying">+ פריט</button>
+                <h3 class="admin-section-label">חושב על</h3>
+                <div id="now-thinking"></div>
+                <button type="button" class="admin-btn admin-btn-ghost add-now-thinking">+ שורה</button>
+                <button type="submit" class="admin-btn admin-btn-primary">שמור דף עכשיו</button>
+                <p id="now-save-status" class="admin-status" hidden></p>
+              </form>
+            </div>
+          </main>
+        </div>
+      )}
+
+      <div id="new-item-modal" class="admin-modal" hidden>
+        <div class="admin-modal-card">
+          <h3 id="new-item-modal-title">פריט חדש</h3>
+          <form id="new-item-form" class="admin-form">
+            <label><span>שפה</span>
+              <select name="locale" required><option value="he">עברית</option><option value="en">English</option></select>
+            </label>
+            <label><span>כותרת</span><input type="text" name="title" required /></label>
+            <label><span>Slug (URL)</span><input type="text" name="slug" placeholder="אופציונלי" dir="ltr" /></label>
+            <p id="new-item-status" class="admin-status" hidden></p>
+            <div class="admin-modal-actions">
+              <button type="button" id="cancel-new-item" class="admin-btn admin-btn-ghost">ביטול</button>
+              <button type="submit" class="admin-btn admin-btn-primary">צור</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="../../scripts/admin-panel.ts"></script>
+  </body>
+</html>

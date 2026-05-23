@@ -1,5 +1,6 @@
 import { locales, defaultLocale, type Locale } from "./config";
-import { translations, type TranslationKey } from "./translations";
+import type { TranslationKey } from "./translations";
+import { getSiteStringTyped } from "@/lib/site-copy";
 
 /** Extract locale from a URL pathname */
 export function getLocaleFromPath(pathname: string): Locale {
@@ -9,7 +10,7 @@ export function getLocaleFromPath(pathname: string): Locale {
 
 /** Get a translated UI string */
 export function t(locale: Locale, key: TranslationKey): string {
-  return translations[locale][key] ?? translations[defaultLocale][key] ?? key;
+  return getSiteStringTyped(locale, key);
 }
 
 /** Convert a path from one locale to another */
