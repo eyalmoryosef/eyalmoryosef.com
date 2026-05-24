@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://eyalmoryosef.com/sitemap-index.xml
