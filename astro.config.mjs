@@ -9,9 +9,9 @@ export default defineConfig({
   adapter: vercel(),
   env: {
     schema: {
-      ADMIN_USERNAME: envField.string({ context: "server", access: "secret" }),
-      ADMIN_PASSWORD: envField.string({ context: "server", access: "secret" }),
-      ADMIN_SESSION_SECRET: envField.string({ context: "server", access: "secret" }),
+      ADMIN_USERNAME: envField.string({ context: "server", access: "secret", optional: true }),
+      ADMIN_PASSWORD: envField.string({ context: "server", access: "secret", optional: true }),
+      ADMIN_SESSION_SECRET: envField.string({ context: "server", access: "secret", optional: true }),
       GITHUB_TOKEN: envField.string({ context: "server", access: "secret", optional: true }),
       GITHUB_REPO: envField.string({ context: "server", access: "secret", optional: true, default: "eyalmoryosef/eyalmoryosef.com" }),
       GITHUB_BRANCH: envField.string({ context: "server", access: "secret", optional: true, default: "master" }),
