@@ -4,7 +4,7 @@ import vercel from "@astrojs/vercel";
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
-  site: "https://eyalmoryosef.com",
+  site: "https://www.eyalmoryosef.co.il",
   integrations: [sitemap()],
   adapter: vercel(),
   env: {
