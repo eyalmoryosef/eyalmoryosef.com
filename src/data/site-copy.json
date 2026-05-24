@@ -1,10 +1,5 @@
 {
   "en": {
-    "nav.home": "Home",
-    "nav.projects": "Projects",
-    "nav.blog": "Blog",
-    "nav.now": "Now",
-    "nav.about": "About",
     "home.hero.eyebrow": "Student · Trader · Builder",
     "home.hero.headline": "I trade algorithmically, build digital tools, and write about what I learn.",
     "home.hero.subdescription": "CS & Physics student, algorithmic trader, handcycle rider, and digital tool builder.",
@@ -18,21 +13,21 @@
     "home.latest.title": "Latest from the Blog",
     "home.now.prefix": "Currently working on:",
     "home.now.link": "See what I'm up to",
+    "blog.title": "Blog",
+    "blog.subtitle": "Sport. Tech. Human Nature.",
     "projects.title": "Projects",
     "projects.subtitle": "Things I'm building.",
-    "blog.title": "Blog",
-    "blog.subtitle": "Sport. Tech. Human Nature."
+    "nav.home": "Home",
+    "nav.projects": "Projects",
+    "nav.blog": "Blog",
+    "nav.now": "Now",
+    "nav.about": "About"
   },
   "he": {
-    "nav.home": "בית",
-    "nav.projects": "פרויקטים",
-    "nav.blog": "בלוג",
-    "nav.now": "עכשיו",
-    "nav.about": "אודות",
-    "home.hero.eyebrow": "סטודנט · סוחר · בונה",
-    "home.hero.headline": "אני סוחר אלגוריתמית, בונה כלים דיגיטליים, וכותב על מה שאני לומד.",
+    "home.hero.eyebrow": "אדם חופשי · סטודנט · יזם",
+    "home.hero.headline": "אוהב טכנולוגיה ומחשבים  בונה כלים דיגיטליים, וכותב על מה שאני לומד.",
     "home.hero.subdescription": "סטודנט למדמ\"ח ופיזיקה, סוחר אלגוריתמי, רוכב אופני ידיים, ובונה כלים דיגיטליים.",
-    "home.hero.tagline": "עובד קשה. בונה חכם.",
+    "home.hero.tagline": "עובד חכם . רוצה יותר מכולם .",
     "home.hero.cta": "לפרויקטים",
     "home.hero.aboutCta": "אודותיי",
     "site.tagline": "בונה, סוחר, כותב",
@@ -42,9 +37,14 @@
     "home.latest.title": "אחרון בבלוג",
     "home.now.prefix": "עובד עכשיו על:",
     "home.now.link": "מה אני עושה עכשיו",
+    "blog.title": "בלוג",
+    "blog.subtitle": "ספורט. טכנולוגיה. טבע אנושי.",
     "projects.title": "פרויקטים",
     "projects.subtitle": "דברים שאני בונה.",
-    "blog.title": "בלוג",
-    "blog.subtitle": "ספורט. טכנולוגיה. טבע אנושי."
+    "nav.home": "בית",
+    "nav.projects": "פרויקטים",
+    "nav.blog": "בלוג",
+    "nav.now": "עכשיו",
+    "nav.about": "אודות"
   }
 }
