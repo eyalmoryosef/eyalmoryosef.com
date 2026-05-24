@@ -7,6 +7,7 @@ export default defineConfig({
   site: "https://www.eyalmoryosef.co.il",
   integrations: [sitemap()],
   adapter: vercel(),
+  security: { checkOrigin: false },
   env: {
     schema: {
       ADMIN_USERNAME: envField.string({ context: "server", access: "secret", optional: true }),
