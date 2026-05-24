@@ -306,6 +306,26 @@ async function loadNow() {
 }
 
 function init() {
+  // Login form must be wired BEFORE the auth gate so unauthenticated users can log in
+  const loginForm = $("login-form");
+  loginForm?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const fd = new FormData(e.target as HTMLFormElement);
+    const res = await fetch("/api/admin/login", {
+      method: "POST",
+      credentials: "same-origin",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username: fd.get("username"), password: fd.get("password") }),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      const el = $("login-error");
+      if (el) { el.textContent = err.error ?? "שגיאה"; el.removeAttribute("hidden"); }
+      return;
+    }
+    window.location.replace("/admin");
+  });
+
   if ($("app")?.dataset.authed !== "true") return;
 
   fetch("/api/admin/me")
@@ -453,25 +473,6 @@ function init() {
       .filter(Boolean);
     const res = await fetch("/api/admin/pages/now", { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ content: nowContent }) });
     showStatus($("now-save-status"), res.ok ? "נשמר" : "שגיאה", res.ok);
-  });
-
-  const loginForm = $("login-form");
-  loginForm?.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const fd = new FormData(e.target as HTMLFormElement);
-    const res = await fetch("/api/admin/login", {
-      method: "POST",
-      credentials: "same-origin",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username: fd.get("username"), password: fd.get("password") }),
-    });
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({}));
-      const el = $("login-error");
-      if (el) { el.textContent = err.error ?? "שגיאה"; el.removeAttribute("hidden"); }
-      return;
-    }
-    window.location.replace("/admin");
   });
 
   switchTab("blog");
